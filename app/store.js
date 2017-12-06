@@ -4,3 +4,4 @@ import loggingMiddleware from 'redux-logger'; // https://github.com/evgenyrodion
 import thunkMiddleware from 'redux-thunk'; // https://github.com/gaearon/redux-thunk
 
 export default createStore(rootReducer, applyMiddleware(thunkMiddleware, loggingMiddleware))
+
