@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import { fetchCampuses, postCampus } from '../reducers';
+import { updateCampus, selectCampus } from '../reducers';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router'
 
 
 class AddCampus extends Component {
@@ -15,14 +14,34 @@ class AddCampus extends Component {
       name: '',
       description: '',
       imageUrl: '',
+      dirty: false
     }
     this.handleTextChange = this.props.handleTextChange.bind(this)
   }
 
+  componentDidMount(){
+    this.props.clearStateOnMount.call(this);
+    this.props.setReduxStateOnMount.call(this);
+  }
+
+  componentWillUpdate(nextProps){
+    console.log(nextProps)
+    if(nextProps.selectedCampus !== this.props.selectedCampus){
+      this.setState({
+        id: nextProps.selectedCampus.id,
+        name: nextProps.selectedCampus.name,
+        description: nextProps.selectedCampus.description,
+        imageUrl: nextProps.selectedCampus.imageUrl,
+        dirty: false
+      })
+    }
+  }
+
   render (){
+    console.log(this.state)
     return(
       <div>
-        <h1> ADD A CAMPUS! </h1><br />
+        <h1> EDIT THIS CAMPUS! </h1><br />
         <br />
         <TextField
           value={this.state.name}
@@ -45,9 +64,10 @@ class AddCampus extends Component {
         /><br />
         <br />
         <RaisedButton
-        label="Add Campus"
-        primary={true}
-        onClick={this.props.handleSubmit.bind(this)}
+          label="Edit Campus"
+          disabled={!this.state.dirty}
+          primary={true}
+          onClick={this.props.handleSubmit.bind(this)}
         />
       </div>
     )
@@ -55,43 +75,53 @@ class AddCampus extends Component {
 }
 
 function mapStateToProps(state){
-  return {};
+  return {
+    campuses: state.campuses,
+    selectedCampus: state.selectedCampus
+  };
 }
 
 function mapDispatchToProps(dispatch){
   return {
     handleSubmit: function (event){
       event.preventDefault();
+      const id = this.state.id
       const name = this.state.name;
       const description = this.state.description;
       const imageUrl = this.state.imageUrl;
-      const campus = {name, imageUrl, description};
+      const campus = {id, name, imageUrl, description};
+      console.log(campus)
 
-      dispatch(postCampus(campus));
-      this.setState({
-        id: null,
-        name: '',
-        description: '',
-        imageUrl: '',
-      })
+      dispatch(updateCampus(campus));
     },
     handleTextChange: function (event, stateProperty){
       const newStateObj = {};
       newStateObj[stateProperty] = event.target.value;
+      newStateObj.dirty = true;
       this.setState(newStateObj);
     },
     clearStateOnMount: function(){
       this.setState({
         name: '',
-        campus: {}
+        campus: {},
+        dirty: true
       })
+    },
+    setReduxStateOnMount: function(){
+      const path = this.props.location.pathname.split('/')
+      const campusId = path[path.length-1]
+      dispatch(selectCampus(campusId))
     }
   }
 }
 
-const AddCampusContainer = connect(mapStateToProps, mapDispatchToProps)(AddCampus);
+const AddCampusContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(AddCampus))
+
+
 
 export default AddCampusContainer;
+
+
 
 // should put in error handling on the front end
 // could make the GPA a dropdown menu

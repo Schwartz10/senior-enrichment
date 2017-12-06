@@ -7,7 +7,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import { fetchStudents, selectedStudentFromList, selectCampus } from '../reducers';
+import { fetchStudents, selectedStudentFromList, selectCampus, deleteCampus } from '../reducers';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
@@ -37,12 +37,15 @@ class SingleCampus extends Component {
           <RaisedButton
             label="Edit Campus"
             secondary={true}
-            containerElement={<Link to="/add-student" />}
+            containerElement={<Link to={`/campuses/edit/${this.props.selectedCampus.id}`} />}
           />
           <RaisedButton
             label="Delete Campus"
             secondary={true}
-            onClick={event => {this.props.handleDelete(event, this.props.selectedStudent)}}
+            onClick={event => {
+              this.props.handleDelete(event, this.props.selectedCampus);
+              this.props.history.push('/campuses');
+            }}
           />
           <RaisedButton
             label="View Student"
@@ -105,9 +108,9 @@ function mapDispatchToProps(dispatch){
     clearSelectedStudent: function (){
       dispatch(selectedStudentFromList({}));
     },
-    handleDelete: function (e, student){
+    handleDelete: function (e, campus){
       e.preventDefault();
-      dispatch(deleteStudent(student))
+      dispatch(deleteCampus(campus));
     }
   }
 }

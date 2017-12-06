@@ -6,7 +6,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import { connect } from 'react-redux';
 import { fetchCampuses } from '../reducers';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 
 
@@ -74,7 +74,7 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-const CampusesContainer = connect(mapStateToProps, mapDispatchToProps)(Campuses)
+const CampusesContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Campuses))
 
 
 

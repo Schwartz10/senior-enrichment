@@ -11,6 +11,8 @@ const DELETED_STUDENT = 'DELETED_STUDENT';
 const UPDATED_STUDENT = 'UPDATED_STUDENT';
 const SELECTED_SINGLE_CAMPUS = 'SELECTED_SINGLE_CAMPUS';
 const GOT_CAMPUS_FROM_SERVER = 'GOT-CAMPUS_FROM_SERVER';
+const DELETED_CAMPUS = 'DELETED_STUDENT';
+const UPDATED_CAMPUS = 'UPDATED_CAMPUS';
 
 //action creators
 export function gotCampusesFromServer(campuses){
@@ -65,6 +67,20 @@ export function selectedSingleCampus(selectedCampus){
 export function gotCampusFromServer(campus){
   return {
     type: GOT_CAMPUS_FROM_SERVER,
+    campus
+  }
+}
+
+export function deletedCampus(campus){
+  return {
+    type: DELETED_CAMPUS,
+    campus
+  }
+}
+
+export function updatedCampus(campus){
+  return {
+    type: UPDATED_CAMPUS,
     campus
   }
 }
@@ -142,6 +158,21 @@ export function postCampus(campus){
   }
 }
 
+export function deleteCampus(campus){
+  return function thunk(dispatch){
+    axios.delete(`/api/campuses/${campus.id}`)
+    .then(() => dispatch(deleteCampus(campus)))
+    .catch(err => console.error(err));
+  };
+}
+
+export function updateCampus(campus){
+  return function thunk(dispatch){
+    axios.put(`/api/campuses/edit/${campus.id}`, campus)
+    .then(campus => dispatch(updatedCampus(campus)))
+    .catch(err => console.error(err));
+  }
+}
 
 const initialState = {campuses: [], students: [], selectedCampus: {}, selectedStudent: {}};
 
@@ -163,7 +194,7 @@ const rootReducer = function(state = initialState, action) {
     case GOT_STUDENT_FROM_SERVER:
       return Object.assign({}, state, {students: [...state.students, action.student]});
     case DELETED_STUDENT:
-      let i = state.students.indexOf(action.student);
+      let studentI = state.students.indexOf(action.student);
       let newStudents = [...state.students.slice(0, i), ...state.students.slice(i + 1)];
       return Object.assign({}, state, { students: newStudents} )
     case UPDATED_STUDENT:
@@ -174,6 +205,14 @@ const rootReducer = function(state = initialState, action) {
       return Object.assign({}, state, { selectedCampus: action.selectedCampus} )
     case GOT_CAMPUS_FROM_SERVER:
       return Object.assign({}, state, {campuses: [...state.campuses, action.campus]})
+    case DELETED_STUDENT:
+      let campusI = state.campuses.indexOf(action.campus);
+      let newCampuses = [...state.campuses.slice(0, i), ...state.campuses.slice(i + 1)];
+      return Object.assign({}, state, { campuses: newCampuses} )
+    case UPDATED_CAMPUS:
+      let campusIdx = state.campuses.indexOf(action.campus);
+      let newCampusList = [...state.campuses.slice(0, campusIdx), action.campus,...state.campuses.slice(campusIdx + 1)];
+      return Object.assign({}, state, { campuses: newCampusList} )
     default: return state;
   }
 };
