@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { fetchCampuses, updateStudent, fetchStudent } from '../reducers';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router'
+import { Route, Switch, Link } from 'react-router-dom';
 
 
 class SingleStudent extends Component {
@@ -14,9 +15,9 @@ class SingleStudent extends Component {
     this.state = {
       id: null,
       name: '',
-      email: this.props.selectedStudent.email,
-      gpa: this.props.selectedStudent.gpa,
-      campus: this.props.selectedStudent.Campus
+      email: '',
+      gpa: '',
+      campus: {}
     }
     this.handleTextChange = this.props.handleTextChange.bind(this)
   }
@@ -27,15 +28,23 @@ class SingleStudent extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if(nextProps.selectedStudent !== props.selectedStudent){
-
+    if(nextProps.selectedStudent !== this.props.selectedStudent){
+      this.setState({
+        id: nextProps.selectedStudent.id,
+        name: nextProps.selectedStudent.name,
+        email: nextProps.selectedStudent.email,
+        gpa: nextProps.selectedStudent.gpa,
+        campus: nextProps.selectedStudent.Campus,
+        dirty: false
+      })
     }
   }
 
   render (){
+    console.log(this.props.selectedStudent)
     return(
       <div>
-        <h1> Update {this.props.selectedStudent.name} </h1><br />
+        <h1> Update Student </h1><br />
         <br />
         <TextField
           value={this.state.name}
@@ -56,8 +65,8 @@ class SingleStudent extends Component {
         /><br />
         <br />
         <SelectField
-          floatingLabelText="Campus"
           value={this.state.campus}
+          floatingLabelText="Campus"
           onChange={this.props.handleSelectChange.bind(this)}
         >
           <MenuItem value={null} primaryText="Select One" />
@@ -69,9 +78,16 @@ class SingleStudent extends Component {
         </SelectField><br />
         <br />
         <RaisedButton
-        label="Update student"
-        primary={true}
-        onClick={this.props.handleSubmit.bind(this)}
+          label="View This Campus"
+          secondary={true}
+          containerElement={<Link to={`/campuses/${this.props.selectedStudent.CampusId}`} />}
+          /><br />
+        <br />
+        <RaisedButton
+          label="Update student"
+          disabled={!this.state.dirty}
+          primary={true}
+          onClick={this.props.handleSubmit.bind(this)}
         />
       </div>
     )
@@ -97,25 +113,20 @@ function mapDispatchToProps(dispatch){
       const gpa = Number(this.state.gpa)
       const email = this.state.email
       const CampusId = this.state.campus.id
-      const userId = this.state.userId;
+      const id = this.state.id;
 
-      const student = {firstName, lastName, gpa, email, CampusId, userId}
+      const student = {firstName, lastName, gpa, email, CampusId, id}
 
       dispatch(updateStudent(student));
-      this.setState({
-        name: '',
-        email: '',
-        gpa: '',
-        campus: {}
-      })
     },
     handleTextChange: function (event, stateProperty){
       const newStateObj = {};
       newStateObj[stateProperty] = event.target.value;
+      newStateObj.dirty = true;
       this.setState(newStateObj);
     },
     handleSelectChange: function (event, index, value){
-      this.setState({campus: value})
+      this.setState({campus: value, dirty: true})
     },
     setReduxStateOnMount: function(){
       const path = this.props.location.pathname.split('/')

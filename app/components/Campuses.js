@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { fetchCampuses } from '../reducers';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Route, Switch, Link } from 'react-router-dom';
+import ActionInfo from 'material-ui/svg-icons/action/info';
+
 
 const styles = {
   // root: {
@@ -42,11 +44,12 @@ class Campuses extends Component {
             <Subheader>Campuses</Subheader>
             {this.props.campuses.map((campus) => (
               <GridTile
+                containerElement={<Link to={`/campuses/${campus.id}`} />}
                 key={campus.id}
                 className="campus_grid_tile"
                 title={campus.name}
                 subtitle={<span> See More </span>}
-                actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                actionIcon={<IconButton><ActionInfo color="white" /></IconButton>}
               >
                 <img src={campus.imageUrl} />
               </GridTile>

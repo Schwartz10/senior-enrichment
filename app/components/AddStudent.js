@@ -26,7 +26,6 @@ class AddStudent extends Component {
   }
 
   render (){
-    console.log(this.state)
     return(
       <div>
         <h1> ADD A STUDENT! </h1><br />

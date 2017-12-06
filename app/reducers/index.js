@@ -9,48 +9,56 @@ const SELECTED_STUDENT_FROM_LIST = 'SELECTED_STUDENT_FROM_LIST';
 const GOT_STUDENT_FROM_SERVER = 'GOT_STUDENT_FROM_SERVER';
 const DELETED_STUDENT = 'DELETED_STUDENT';
 const UPDATED_STUDENT = 'UPDATED_STUDENT';
+const SELECTED_SINGLE_CAMPUS = 'SELECTED_SINGLE_CAMPUS';
 
 //action creators
 export function gotCampusesFromServer(campuses){
   return {
     type: GOT_CAMPUSES_FROM_SERVER,
     campuses
-  }
+  };
 }
 
 export function gotStudentsFromServer(students){
   return {
     type: GOT_STUDENTS_FROM_SERVER,
     students
-  }
+  };
 }
 
 export function selectedStudentFromList(selectedStudent){
   return {
     type: SELECTED_STUDENT_FROM_LIST,
     selectedStudent
-  }
+  };
 }
 
 export function gotStudentFromServer(student){
   return {
     type: GOT_STUDENT_FROM_SERVER,
     student
-  }
+  };
 }
 
 export function deletedStudent(student){
   return {
     type: DELETED_STUDENT,
     student
-  }
+  };
 }
 
 export function updatedStudent(student){
   return {
     type: UPDATED_STUDENT,
     student
-  }
+  };
+}
+
+export function selectedSingleCampus(selectedCampus){
+  return {
+    type: SELECTED_SINGLE_CAMPUS,
+    selectedCampus
+  };
 }
 
 
@@ -61,7 +69,7 @@ export function fetchCampuses(){
     .then(res => res.data)
     .then(campuses => dispatch(gotCampusesFromServer(campuses)))
     .catch(err => console.error(err));
-  }
+  };
 }
 
 export function fetchStudents(){
@@ -70,7 +78,7 @@ export function fetchStudents(){
     .then(res => res.data)
     .then(students => dispatch(gotStudentsFromServer(students)))
     .catch(err => console.error(err));
-  }
+  };
 }
 
 export function postStudent(student){
@@ -79,15 +87,15 @@ export function postStudent(student){
     .then(res => res.data)
     .then(student => dispatch(gotStudentFromServer(student)))
     .catch(err => console.error(err));
-  }
+  };
 }
 
 export function deleteStudent(student){
   return function thunk(dispatch){
     axios.delete(`/api/students/${student.id}`)
     .then(() => dispatch(deletedStudent(student)))
-    .catch(err => console.error(err))
-  }
+    .catch(err => console.error(err));
+  };
 }
 
 export function fetchStudent(studentId){
@@ -95,13 +103,25 @@ export function fetchStudent(studentId){
     axios.get(`/api/students/${studentId}`)
     .then(res => res.data)
     .then(student => dispatch(selectedStudentFromList(student)))
-    .catch(err => console.error(err))
-  }
+    .catch(err => console.error(err));
+  };
 }
 
 export function updateStudent(student){
   return function thunk(dispatch){
-    axios.put(`/api/students/${student.studentId}`, student)
+    axios.put(`/api/students/${student.id}`, student)
+    .then(res => res.data)
+    .then(newStudent => dispatch(updatedStudent(newStudent)))
+    .catch(err => console.error(err));
+  };
+}
+
+export function selectCampus(campusId){
+  return function thunk(dispatch){
+    axios.get(`/api/campuses/${campusId}`)
+    .then(res => res.data)
+    .then(campus => dispatch(selectedSingleCampus(campus)))
+    .catch(err => console.error(err));
   }
 }
 
@@ -116,7 +136,6 @@ const initialState = {campuses: [], students: [], selectedCampus: {}, selectedSt
 // }
 
 const rootReducer = function(state = initialState, action) {
-  console.log(action.student)
   switch(action.type) {
     case GOT_CAMPUSES_FROM_SERVER:
       return Object.assign({}, state, { campuses: action.campuses });
@@ -134,6 +153,8 @@ const rootReducer = function(state = initialState, action) {
       let idx = state.students.indexOf(action.student);
       let newStudentList = [...state.students.slice(0, i), action.student,...state.students.slice(i + 1)];
       return Object.assign({}, state, { students: newStudentList} )
+    case SELECTED_SINGLE_CAMPUS:
+    return Object.assign({}, state, { selectedCampus: action.selectedCampus} )
     default: return state;
   }
 };
