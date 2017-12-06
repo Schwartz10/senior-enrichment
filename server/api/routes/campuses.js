@@ -13,3 +13,9 @@ router.get('/:campusId', (req, res, next) => {
   .then(campus => res.json(campus))
   .catch(err => next(err));
 });
+
+router.post('/', (req, res, next) => {
+  Campus.create(req.body)
+  .then(student => res.json(student))
+  .catch(err => console.error(err));
+});

@@ -10,6 +10,7 @@ const GOT_STUDENT_FROM_SERVER = 'GOT_STUDENT_FROM_SERVER';
 const DELETED_STUDENT = 'DELETED_STUDENT';
 const UPDATED_STUDENT = 'UPDATED_STUDENT';
 const SELECTED_SINGLE_CAMPUS = 'SELECTED_SINGLE_CAMPUS';
+const GOT_CAMPUS_FROM_SERVER = 'GOT-CAMPUS_FROM_SERVER';
 
 //action creators
 export function gotCampusesFromServer(campuses){
@@ -59,6 +60,13 @@ export function selectedSingleCampus(selectedCampus){
     type: SELECTED_SINGLE_CAMPUS,
     selectedCampus
   };
+}
+
+export function gotCampusFromServer(campus){
+  return {
+    type: GOT_CAMPUS_FROM_SERVER,
+    campus
+  }
 }
 
 
@@ -125,6 +133,15 @@ export function selectCampus(campusId){
   }
 }
 
+export function postCampus(campus){
+  return function thunk(dispatch){
+    axios.post('/api/campuses', campus)
+    .then(res => res.data)
+    .then(campus => dispatch(gotCampusFromServer(campus)))
+    .catch(err => console.error(err));
+  }
+}
+
 
 const initialState = {campuses: [], students: [], selectedCampus: {}, selectedStudent: {}};
 
@@ -154,7 +171,9 @@ const rootReducer = function(state = initialState, action) {
       let newStudentList = [...state.students.slice(0, i), action.student,...state.students.slice(i + 1)];
       return Object.assign({}, state, { students: newStudentList} )
     case SELECTED_SINGLE_CAMPUS:
-    return Object.assign({}, state, { selectedCampus: action.selectedCampus} )
+      return Object.assign({}, state, { selectedCampus: action.selectedCampus} )
+    case GOT_CAMPUS_FROM_SERVER:
+      return Object.assign({}, state, {campuses: [...state.campuses, action.campus]})
     default: return state;
   }
 };

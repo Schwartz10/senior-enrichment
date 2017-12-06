@@ -35,3 +35,4 @@ Campus.hasMany(Student);
 module.exports = { db, Student, Campus };
 
 // need to require campus as a foreign key
+// belongsTo(moel, {foreignKeyConstraint: {allowNull: false}})

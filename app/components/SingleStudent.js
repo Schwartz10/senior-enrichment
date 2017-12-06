@@ -41,7 +41,6 @@ class SingleStudent extends Component {
   }
 
   render (){
-    console.log(this.props.selectedStudent)
     return(
       <div>
         <h1> Update Student </h1><br />
@@ -71,6 +70,7 @@ class SingleStudent extends Component {
         >
           <MenuItem value={null} primaryText="Select One" />
           {this.props.campuses.map((campus)=> {
+            console.log(campus)
             return (
               <MenuItem key={campus.id} value={campus} primaryText={campus.name} />
             )
@@ -142,4 +142,5 @@ const SingleStudentContainer = withRouter(connect(mapStateToProps, mapDispatchTo
 
 export default SingleStudentContainer;
 
-// how can i add
+// could it be that we're not rerendering the page after campuses are fetched?
+

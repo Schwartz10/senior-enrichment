@@ -59,7 +59,6 @@ class Students extends Component {
 
           <TableBody displayRowCheckbox={true}>
             {this.props.students.map(student => {
-              console.log(student)
               return (
                 <TableRow key={student.id}>
                   <TableRowColumn>{student.id}</TableRowColumn>
