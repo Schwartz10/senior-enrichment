@@ -15,7 +15,7 @@ class AddStudent extends Component {
       name: '',
       email: '',
       gpa: '',
-      campus: {}
+      campus: null
     }
     this.handleTextChange = this.props.handleTextChange.bind(this)
   }
@@ -50,10 +50,11 @@ class AddStudent extends Component {
         <br />
         <SelectField
           floatingLabelText="Campus"
+          floatingLabelFixed={true}
           value={this.state.campus}
           onChange={this.props.handleSelectChange.bind(this)}
         >
-          <MenuItem value={null} primaryText="Select One" />
+          <MenuItem value={null} primaryText='SELECT ONE'/>
           {this.props.campuses.map((campus)=> {
             return (
               <MenuItem key={campus.id} value={campus} primaryText={campus.name} />
@@ -62,9 +63,9 @@ class AddStudent extends Component {
         </SelectField><br />
         <br />
         <RaisedButton
-        label="Add Student"
-        primary={true}
-        onClick={this.props.handleSubmit.bind(this)}
+          label="Add Student"
+          primary={true}
+          onClick={this.props.handleSubmit.bind(this)}
         />
       </div>
     )
@@ -98,7 +99,7 @@ function mapDispatchToProps(dispatch){
         name: '',
         email: '',
         gpa: '',
-        campus: {}
+        campus: null
       })
     },
     handleTextChange: function (event, stateProperty){
@@ -112,7 +113,7 @@ function mapDispatchToProps(dispatch){
     clearStateOnMount: function(){
       this.setState({
         name: '',
-        campus: {}
+        campus: null
       })
     }
   }
