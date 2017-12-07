@@ -29,7 +29,7 @@ const Campus = db.define('Campus', {
 	description: {type: Sequelize.TEXT}
 });
 
-Student.belongsTo(Campus);
+Student.belongsTo(Campus, {foreignKeyConstraint: true});
 Campus.hasMany(Student);
 
 module.exports = { db, Student, Campus };

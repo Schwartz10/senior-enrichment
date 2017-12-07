@@ -11,5 +11,6 @@
 }
 
 .student_table {
-  width: 20em
+  width: 75% !important;
+  align-self: center !important
 }

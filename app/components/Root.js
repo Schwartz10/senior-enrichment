@@ -21,7 +21,6 @@ export default class Root extends Component {
   }
 
   render(){
-    console.log(this.context)
     return (
       <Router>
         <MuiThemeProvider >

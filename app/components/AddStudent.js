@@ -26,6 +26,13 @@ class AddStudent extends Component {
   }
 
   render (){
+    // makes sure everything on the page is filled out error handling
+    const fullName = this.state.name.split(' ').length === 2;
+    const campusSelected = !!this.state.campus
+    const email = this.state.email.length > 0
+    const gpa = this.state.gpa.length > 0
+    const canSubmit = fullName && email && campusSelected && gpa
+
     return(
       <div>
         <h1> ADD A STUDENT! </h1><br />
@@ -64,6 +71,7 @@ class AddStudent extends Component {
         <br />
         <RaisedButton
           label="Add Student"
+          disabled={!canSubmit}
           primary={true}
           onClick={this.props.handleSubmit.bind(this)}
         />
