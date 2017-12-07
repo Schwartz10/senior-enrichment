@@ -14,3 +14,12 @@
   width: 75% !important;
   align-self: center !important
 }
+
+.raised_button {
+  margin: 1em !important;
+}
+
+.subheader {
+  font-size: 3em !important;
+  padding: 1em !important;
+}

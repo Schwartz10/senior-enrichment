@@ -35,13 +35,14 @@ class Campuses extends Component {
     return(
       <div>
         <RaisedButton
+          className="raised_button"
           label="Add Campus"
           secondary={true}
           containerElement={<Link to="/add-campus" />}
         />
         <div style={styles.root}>
           <GridList cellHeight={350} style={styles.gridList} >
-            <Subheader>Campuses</Subheader>
+            <Subheader className='subheader'>Campuses</Subheader>
             {this.props.campuses.map((campus) => (
               <GridTile
                 containerElement={<Link to={`/campuses/${campus.id}`} />}
@@ -74,7 +75,7 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-const CampusesContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Campuses))
+const CampusesContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Campuses));
 
 
 

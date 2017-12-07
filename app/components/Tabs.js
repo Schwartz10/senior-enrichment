@@ -30,7 +30,6 @@ const TabsComponent = (props) => {
         <div>
         </div>
       </Tab>
-
     </Tabs>
   );
 }

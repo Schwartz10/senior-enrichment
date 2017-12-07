@@ -15,7 +15,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 class Students extends Component {
   constructor(props){
     super(props)
-    this.state = {showCheckboxes: true}
+    this.state = {selectedRow: null}
   }
 
   componentDidMount(){
@@ -35,18 +35,20 @@ class Students extends Component {
           <RaisedButton
             label="View/Edit Student"
             secondary={true}
-            disabled={this.props.selectedStudent.id ? false : true}
+            disabled={!this.props.selectedStudent.id}
             containerElement={<Link to={`/students/${this.props.selectedStudent.id}`} /> }
           />
           <RaisedButton
             label="Delete Student"
             secondary={true}
-            disabled={this.props.selectedStudent.id ? false : true}
+            disabled={!this.props.selectedStudent.id}
             onClick={event => {this.props.handleDelete(event, this.props.selectedStudent)}}
           />
         </div>
         <Table
-          onCellClick={(rowNum)=>this.props.selectStudent(this.props.students[rowNum])}
+          onRowSelection={(row) => {
+            console.log(row)
+            this.props.handleRowSelection.call(this, row, this.props.students[row])} }
           className="student_table">
 
           <TableHeader adjustForCheckbox={true} displaySelectAll={false}>
@@ -57,10 +59,10 @@ class Students extends Component {
             </TableRow>
           </TableHeader>
 
-          <TableBody displayRowCheckbox={true}>
-            {this.props.students.map(student => {
+          <TableBody deselectOnClickaway={false} displayRowCheckbox={true}>
+            {this.props.students.map((student, idx) => {
               return (
-                <TableRow key={student.id}>
+                <TableRow key={student.id} selected={idx === this.state.selectedRow}>
                   <TableRowColumn>{student.id}</TableRowColumn>
                   <TableRowColumn>{student.name}</TableRowColumn>
                   <TableRowColumn>{student.Campus ? student.Campus.name : 'NONE'}</TableRowColumn>
@@ -95,6 +97,10 @@ function mapDispatchToProps(dispatch){
     handleDelete: function (e, student){
       e.preventDefault();
       dispatch(deleteStudent(student))
+    },
+    handleRowSelection: function (row, student){
+      row.length ? dispatch(selectedStudentFromList(student)) : dispatch(selectedStudentFromList([]))
+      this.setState({selectedRow: row[0]})
     }
   }
 }

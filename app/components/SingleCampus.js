@@ -35,11 +35,13 @@ class SingleCampus extends Component {
         <Subheader inset={true}>{this.props.selectedCampus.description}</Subheader>
         <div>
           <RaisedButton
+            className="raised_button"
             label="Edit Campus"
             secondary={true}
             containerElement={<Link to={`/campuses/edit/${this.props.selectedCampus.id}`} />}
           />
           <RaisedButton
+          className="raised_button"
             label="Delete Campus"
             secondary={true}
             onClick={event => {
@@ -48,6 +50,7 @@ class SingleCampus extends Component {
             }}
           />
           <RaisedButton
+            className="raised_button"
             label="View Student"
             secondary={true}
             disabled={this.props.selectedStudent.id ? false : true}
