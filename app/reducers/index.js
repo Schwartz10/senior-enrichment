@@ -136,7 +136,7 @@ export function updateStudent(student){
   return function thunk(dispatch){
     axios.put(`/api/students/${student.id}`, student)
     .then(res => res.data)
-    .then(newStudent => dispatch(updatedStudent(newStudent)))
+    .then(newStudent => dispatch(updatedStudent(student)))
     .catch(err => console.error(err));
   };
 }
@@ -197,13 +197,13 @@ const rootReducer = function(state = initialState, action) {
     case GOT_STUDENT_FROM_SERVER:
       return Object.assign({}, state, {students: [...state.students, action.student]});
     case DELETED_STUDENT:
-      let studentStateMap = state.students.map(student = student.id)
+      let studentStateMap = state.students.map(student => student.id)
       let studentI = studentStateMap.indexOf(action.student.id);
       let newStudents = [...state.students.slice(0, studentI), ...state.students.slice(studentI + 1)];
       return Object.assign({}, state, { students: newStudents} )
     case UPDATED_STUDENT:
-      let newStudentStateMap = newStudentStateMap.map(student = student.id)
-      let idx = newStudentStateMap.indexOf(action.student);
+      let newStudentStateMap = state.students.map(student => student.id)
+      let idx = newStudentStateMap.indexOf(action.student.id);
       let newStudentList = [...state.students.slice(0, idx), action.student,...state.students.slice(idx + 1)];
       return Object.assign({}, state, { students: newStudentList} )
     case SELECTED_SINGLE_CAMPUS:
