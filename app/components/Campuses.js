@@ -41,7 +41,7 @@ class Campuses extends Component {
         <RaisedButton
           className="raised_button"
           label="Add Campus"
-          secondary={true}
+          primary={true}
           containerElement={<Link to="/add-campus" />}
         />
         <div style={styles.root}>

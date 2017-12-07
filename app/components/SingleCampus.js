@@ -36,13 +36,13 @@ class SingleCampus extends Component {
           <RaisedButton
             className="raised_button"
             label="Edit Campus"
-            secondary={true}
+            primary={true}
             containerElement={<Link to={`/campuses/edit/${this.props.selectedCampus.id}`} />}
           />
           <RaisedButton
             className="raised_button"
             label="Delete Campus"
-            secondary={true}
+            primary={true}
             onClick={event => {
               this.props.handleDelete(event, this.props.selectedCampus)
               this.props.history.push('/campuses');
@@ -51,7 +51,7 @@ class SingleCampus extends Component {
           <RaisedButton
             className="raised_button"
             label="View Student"
-            secondary={true}
+            primary={true}
             disabled={this.props.selectedStudent.id ? false : true}
             containerElement={<Link to={`/students/${this.props.selectedStudent.id}`} /> }
           />

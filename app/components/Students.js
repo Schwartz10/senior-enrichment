@@ -20,20 +20,20 @@ const Students = (props) => (
       <RaisedButton
         className="raised_button"
         label="Add Student"
-        secondary={true}
+        primary={true}
         containerElement={<Link to="/add-student" />}
       />
       <RaisedButton
         className="raised_button"
         label="View/Edit Student"
-        secondary={true}
+        primary={true}
         disabled={!props.selectedStudent.id}
-        containerElement={<Link to={`/students/${props.selectedStudent.id}`} /> }
+        containerElement={<Link to={props.selectedStudent.id ? `/students/${props.selectedStudent.id}` : '/students'} /> }
       />
       <RaisedButton
         className="raised_button"
         label="Delete Student"
-        secondary={true}
+        primary={true}
         disabled={!props.selectedStudent.id}
         onClick={event => props.handleDelete(event, props.selectedStudent)}
       /><br>
