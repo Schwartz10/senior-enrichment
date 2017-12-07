@@ -44,6 +44,7 @@ export function gotStudentFromServer(student){
 }
 
 export function deletedStudent(student){
+  console.log(student)
   return {
     type: DELETED_STUDENT,
     student
@@ -184,6 +185,7 @@ const initialState = {campuses: [], students: [], selectedCampus: {}, selectedSt
 // }
 
 const rootReducer = function(state = initialState, action) {
+  Object.freeze(state)
   switch(action.type) {
     case GOT_CAMPUSES_FROM_SERVER:
       return Object.assign({}, state, { campuses: action.campuses });
@@ -195,11 +197,11 @@ const rootReducer = function(state = initialState, action) {
       return Object.assign({}, state, {students: [...state.students, action.student]});
     case DELETED_STUDENT:
       let studentI = state.students.indexOf(action.student);
-      let newStudents = [...state.students.slice(0, i), ...state.students.slice(i + 1)];
+      let newStudents = [...state.students.slice(0, studentI), ...state.students.slice(studentI + 1)];
       return Object.assign({}, state, { students: newStudents} )
     case UPDATED_STUDENT:
       let idx = state.students.indexOf(action.student);
-      let newStudentList = [...state.students.slice(0, i), action.student,...state.students.slice(i + 1)];
+      let newStudentList = [...state.students.slice(0, idx), action.student,...state.students.slice(idx + 1)];
       return Object.assign({}, state, { students: newStudentList} )
     case SELECTED_SINGLE_CAMPUS:
       return Object.assign({}, state, { selectedCampus: action.selectedCampus} )
@@ -207,7 +209,7 @@ const rootReducer = function(state = initialState, action) {
       return Object.assign({}, state, {campuses: [...state.campuses, action.campus]})
     case DELETED_STUDENT:
       let campusI = state.campuses.indexOf(action.campus);
-      let newCampuses = [...state.campuses.slice(0, i), ...state.campuses.slice(i + 1)];
+      let newCampuses = [...state.campuses.slice(0, campusI), ...state.campuses.slice(campusI + 1)];
       return Object.assign({}, state, { campuses: newCampuses} )
     case UPDATED_CAMPUS:
       let campusIdx = state.campuses.indexOf(action.campus);

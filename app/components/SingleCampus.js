@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import Subheader from 'material-ui/Subheader';
+import StudentTable from './StudentTable';
 
 
 class SingleCampus extends Component {
@@ -24,8 +25,6 @@ class SingleCampus extends Component {
     const path = this.props.location.pathname.split('/')
     const pathId = path[path.length-1];
     this.props.getSelectedCampus(pathId)
-    this.props.getStudents();
-    this.props.clearSelectedStudent()
   }
 
   render(){
@@ -57,33 +56,7 @@ class SingleCampus extends Component {
             containerElement={<Link to={`/students/${this.props.selectedStudent.id}`} /> }
           />
         </div>
-        <Table
-          onCellClick={(rowNum)=>this.props.selectStudent(this.props.students[rowNum])}
-          className="student_table">
-
-          <TableHeader adjustForCheckbox={true} displaySelectAll={false}>
-            <TableRow >
-              <TableHeaderColumn>ID</TableHeaderColumn>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>Campus</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody displayRowCheckbox={true}>
-            {this.props.students
-              //add filter in here to check if student.campus id === campus id
-              .filter(student => this.props.selectedCampus.id === student.CampusId)
-              .map(student => {
-              return (
-                <TableRow key={student.id}>
-                  <TableRowColumn>{student.id}</TableRowColumn>
-                  <TableRowColumn>{student.name}</TableRowColumn>
-                  <TableRowColumn>{student.Campus ? student.Campus.name : 'NONE'}</TableRowColumn>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
+        <StudentTable filter={this.props.selectedCampus.id}/>
       </div>
     )
   }
@@ -91,7 +64,6 @@ class SingleCampus extends Component {
 
 function mapStateToProps(state){
   return {
-    students: state.students,
     selectedStudent: state.selectedStudent,
     selectedCampus: state.selectedCampus
   };
@@ -99,17 +71,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return {
-    getStudents: function (){
-      dispatch(fetchStudents());
-    },
     getSelectedCampus: function(campusId){
       dispatch(selectCampus(campusId));
-    },
-    selectStudent: function(student){
-      dispatch(selectedStudentFromList(student));
-    },
-    clearSelectedStudent: function (){
-      dispatch(selectedStudentFromList({}));
     },
     handleDelete: function (e, campus){
       e.preventDefault();
@@ -122,3 +85,4 @@ const SingleCampusContainer = withRouter(connect(mapStateToProps, mapDispatchToP
 
 export default SingleCampusContainer;
 
+// pass as a prop
