@@ -6,20 +6,17 @@
   height: 50em
 }
 
-.deleteBtn {
-  color: white
-}
-
 .student_table {
   width: 75% !important;
   align-self: center !important
 }
 
 .raised_button {
-  margin: 1em !important;
+  margin: .25em !important;
 }
 
 .subheader {
   font-size: 3em !important;
-  padding: 1em !important;
+  padding: .25em !important;
 }
+

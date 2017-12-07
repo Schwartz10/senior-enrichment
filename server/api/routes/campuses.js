@@ -22,11 +22,11 @@ router.post('/', (req, res, next) => {
 
 router.delete('/:campusId', (req, res, next) => {
   Campus.destroy({where: {id: req.params.campusId}})
+  .then(numAffectedRows => res.json(numAffectedRows))
   .catch(err => console.error(err));
 })
 
 router.put('/edit/:id', (req, res, next) => {
-  console.log(req.body)
   Campus.update(req.body, { where: {id: req.params.id} })
   .then(campus => res.json(campus))
   .catch(err => console.error(err));

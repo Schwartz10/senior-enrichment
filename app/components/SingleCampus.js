@@ -31,7 +31,7 @@ class SingleCampus extends Component {
     return(
       <div>
         <h1>{this.props.selectedCampus.name}</h1>
-        <Subheader inset={true}>{this.props.selectedCampus.description}</Subheader>
+        <Subheader className="subheader" inset={true}>{this.props.selectedCampus.description}</Subheader>
         <div>
           <RaisedButton
             className="raised_button"
@@ -40,11 +40,11 @@ class SingleCampus extends Component {
             containerElement={<Link to={`/campuses/edit/${this.props.selectedCampus.id}`} />}
           />
           <RaisedButton
-          className="raised_button"
+            className="raised_button"
             label="Delete Campus"
             secondary={true}
             onClick={event => {
-              this.props.handleDelete(event, this.props.selectedCampus);
+              this.props.handleDelete(event, this.props.selectedCampus)
               this.props.history.push('/campuses');
             }}
           />
@@ -56,7 +56,7 @@ class SingleCampus extends Component {
             containerElement={<Link to={`/students/${this.props.selectedStudent.id}`} /> }
           />
         </div>
-        <StudentTable filter={this.props.selectedCampus.id}/>
+        <StudentTable filter={this.props.students.filter(student => student.CampusId === this.props.selectedCampus.id)}/>
       </div>
     )
   }
@@ -65,7 +65,8 @@ class SingleCampus extends Component {
 function mapStateToProps(state){
   return {
     selectedStudent: state.selectedStudent,
-    selectedCampus: state.selectedCampus
+    selectedCampus: state.selectedCampus,
+    students: state.students
   };
 }
 

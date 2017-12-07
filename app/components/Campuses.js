@@ -31,6 +31,10 @@ class Campuses extends Component {
     this.props.getCampuses();
   }
 
+  componentWillUpdate(nextProps){
+    if (nextProps.campuses === this.props.campuses) this.props.getCampuses();
+  }
+
   render(){
     return(
       <div>

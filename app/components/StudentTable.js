@@ -25,17 +25,19 @@ class StudentTable extends Component {
   }
 
   componentWillUpdate(nextProps){
-    if (nextProps.filter !== this.props.filter) this.props.filterStudentSelection.call(this,nextProps)
-    if (nextProps.students.length !== this.props.students.length){
-      this.setState({selectedRow: null})
+    //checks to see if this component is being filtered, if it is, run the filter method
+    if (nextProps.filter !== this.state.students){
+      console.log('filter ran')
+      this.setState({selectedRow: null, students: nextProps.filter})
     }
   }
 
   render() {
+    console.log('rerendered')
     return (
       <Table
         onRowSelection={(row) => {
-          this.props.handleRowSelection.call(this, row, this.state.students[row])} }
+        this.props.handleRowSelection.call(this, row, this.state.students[row])} }
         className="student_table">
 
         <TableHeader adjustForCheckbox={true} displaySelectAll={false}>
@@ -48,6 +50,7 @@ class StudentTable extends Component {
 
         <TableBody deselectOnClickaway={false} displayRowCheckbox={true}>
           {this.state.students.map((student, idx) => {
+            console.log(student, idx)
             return (
               <TableRow key={student.id} selected={idx === this.state.selectedRow}>
                 <TableRowColumn>{student.id}</TableRowColumn>
@@ -72,22 +75,21 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return {
     getStudents: function (){
-      dispatch(fetchStudents());
+      dispatch(fetchStudents())
     },
     clearSelectedStudent: function (){
       dispatch(selectedStudentFromList({}));
     },
     handleRowSelection: function (row, student){
+      console.log(row, student)
       row.length ? dispatch(selectedStudentFromList(student)) : dispatch(selectedStudentFromList([]))
       this.setState({selectedRow: row[0]})
     },
-    filterStudentSelection: function (props){
-      const studentList = props.students.filter(student => student.CampusId === props.filter);
-      this.setState({students: studentList})
-    }
   }
 }
 
 const StudentTableContainer = connect(mapStateToProps, mapDispatchToProps)(StudentTable)
 
 export default StudentTableContainer;
+
+// why does campus rendering of student table render each table selection 4 times, whereas the students version renders correctly?

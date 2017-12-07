@@ -90,7 +90,6 @@ function mapDispatchToProps(dispatch){
       const description = this.state.description;
       const imageUrl = this.state.imageUrl;
       const campus = {id, name, imageUrl, description};
-      console.log(campus)
 
       dispatch(updateCampus(campus));
     },
