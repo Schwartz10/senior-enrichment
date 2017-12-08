@@ -25,7 +25,6 @@ class AddCampus extends Component {
   }
 
   componentWillUpdate(nextProps){
-    console.log(nextProps)
     if(nextProps.selectedCampus !== this.props.selectedCampus){
       this.setState({
         id: nextProps.selectedCampus.id,
@@ -38,8 +37,7 @@ class AddCampus extends Component {
   }
 
   render (){
-    console.log(this.state)
-    return(
+    return (
       <div>
         <h1> EDIT THIS CAMPUS! </h1><br />
         <br />

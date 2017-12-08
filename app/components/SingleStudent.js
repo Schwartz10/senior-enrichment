@@ -109,9 +109,9 @@ function mapDispatchToProps(dispatch){
     handleSubmit: function (event){
       event.preventDefault();
       const [firstName, lastName] = this.state.name.split(' ')
-      const gpa = Number(this.state.gpa)
-      const email = this.state.email
-      const CampusId = this.state.campus
+      const gpa = Number(this.state.gpa);
+      const email = this.state.email;
+      const CampusId = this.state.campus;
       const id = this.state.id;
 
       const student = {firstName, lastName, gpa, email, CampusId, id}

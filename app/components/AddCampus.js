@@ -20,7 +20,11 @@ class AddCampus extends Component {
   }
 
   render (){
-    return(
+    const _campusName = this.state.name.length > 0;
+    const _description = this.state.description.length > 0;
+    const _imageUrl = this.state.imageUrl.length > 0;
+    const canSubmit = _campusName && _description && _imageUrl;
+    return (
       <div>
         <h1> ADD A CAMPUS! </h1><br />
         <br />
@@ -46,6 +50,7 @@ class AddCampus extends Component {
         <br />
         <RaisedButton
         label="Add Campus"
+        disabled={!canSubmit}
         primary={true}
         onClick={this.props.handleSubmit.bind(this)}
         />
