@@ -20,20 +20,18 @@ class StudentTable extends Component {
   }
 
   componentDidMount(){
-    this.props.getStudents();
     this.props.clearSelectedStudent();
   }
 
   componentWillUpdate(nextProps){
+    console.log('NEXTPROPS', nextProps)
     //checks to see if this component is being filtered, if it is, run the filter method
     if (nextProps.filter !== this.state.students){
-      console.log('filter ran')
-      this.setState({selectedRow: null, students: nextProps.filter})
+      this.props.updatePage.call(this, nextProps);
     }
   }
 
   render() {
-    console.log('rerendered')
     return (
       <Table
         onRowSelection={(row) => {
@@ -65,18 +63,15 @@ class StudentTable extends Component {
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state, ownProps){
   return {
-    students: state.students,
-    selectedStudent: state.selectedStudent,
+    students: ownProps.filter,
+    selectedStudent: state.selectedStudent
   };
 }
 
 function mapDispatchToProps(dispatch){
   return {
-    getStudents: function (){
-      dispatch(fetchStudents())
-    },
     clearSelectedStudent: function (){
       dispatch(selectedStudentFromList({}));
     },
@@ -85,6 +80,9 @@ function mapDispatchToProps(dispatch){
       row.length ? dispatch(selectedStudentFromList(student)) : dispatch(selectedStudentFromList([]))
       this.setState({selectedRow: row[0]})
     },
+    updatePage: function (nextProps){
+      this.setState({selectedRow: null, students: nextProps.filter})
+    }
   }
 }
 

@@ -14,36 +14,48 @@ import { Route, Switch, Link } from 'react-router-dom';
 import StudentTable from './StudentTable';
 import Subheader from 'material-ui/Subheader';
 
-const Students = (props) => (
-  <div>
-    <div className="listViewButtons">
-      <RaisedButton
-        className="raised_button"
-        label="Add Student"
-        primary={true}
-        containerElement={<Link to="/add-student" />}
-      />
-      <RaisedButton
-        className="raised_button"
-        label="View/Edit Student"
-        primary={true}
-        disabled={!props.selectedStudent.id}
-        containerElement={<Link to={props.selectedStudent.id ? `/students/${props.selectedStudent.id}` : '/students'} /> }
-      />
-      <RaisedButton
-        className="raised_button"
-        label="Delete Student"
-        primary={true}
-        disabled={!props.selectedStudent.id}
-        onClick={event => props.handleDelete(event, props.selectedStudent)}
-      /><br>
-      </br>
-      <Subheader className='subheader'>Students</Subheader>
-    </div>
+class Students extends Component {
+  constructor(props){
+    super(props)
+  }
 
-    <StudentTable filter={props.students}/>
-  </div>
-)
+  componentDidMount(){
+    this.props.getStudents();
+  }
+
+  render(){
+    return (
+      <div>
+        <div className="listViewButtons">
+          <RaisedButton
+            className="raised_button"
+            label="Add Student"
+            primary={true}
+            containerElement={<Link to="/add-student" />}
+          />
+          <RaisedButton
+            className="raised_button"
+            label="View/Edit Student"
+            primary={true}
+            disabled={!this.props.selectedStudent.id}
+            containerElement={<Link to={this.props.selectedStudent.id ? `/students/${this.props.selectedStudent.id}` : '/students'} /> }
+          />
+          <RaisedButton
+            className="raised_button"
+            label="Delete Student"
+            primary={true}
+            disabled={!this.props.selectedStudent.id}
+            onClick={event => this.props.handleDelete(event, this.props.selectedStudent)}
+          /><br>
+          </br>
+          <Subheader className='subheader'>Students</Subheader>
+        </div>
+
+        <StudentTable filter={this.props.students}/>
+      </div>
+    )
+  }
+}
 
 function mapStateToProps(state){
   return {
@@ -57,6 +69,9 @@ function mapDispatchToProps(dispatch){
     handleDelete: function (e, student){
       e.preventDefault();
       dispatch(deleteStudent(student));
+    },
+    getStudents: function (){
+      dispatch(fetchStudents());
     },
   }
 }

@@ -24,10 +24,12 @@ class SingleCampus extends Component {
   componentDidMount(){
     const path = this.props.location.pathname.split('/')
     const pathId = path[path.length-1];
-    this.props.getSelectedCampus(pathId)
+    this.props.getSelectedCampus(pathId);
+    this.props.getStudents()
   }
 
   render(){
+    console.log('SINGLE CMAPUS RERENDER')
     return(
       <div>
         <h1>{this.props.selectedCampus.name}</h1>
@@ -74,6 +76,9 @@ function mapDispatchToProps(dispatch){
   return {
     getSelectedCampus: function(campusId){
       dispatch(selectCampus(campusId));
+    },
+    getStudents: function (){
+      dispatch(fetchStudents())
     },
     handleDelete: function (e, campus){
       e.preventDefault();
