@@ -28,7 +28,6 @@ class SingleStudent extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    console.log('SINGLE STUDENT', nextProps)
     if(nextProps.selectedStudent !== this.props.selectedStudent){
       this.setState({
         id: nextProps.selectedStudent.id,
@@ -42,7 +41,6 @@ class SingleStudent extends Component {
   }
 
   render (){
-    console.log('STATE', this.state)
     return(
       <div>
         <h1> Update Student </h1><br />

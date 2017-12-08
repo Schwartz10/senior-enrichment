@@ -24,7 +24,6 @@ class Students extends Component {
   }
 
   render(){
-    console.log("-----------------------> Re")
     return (
       <div>
         <div className="listViewButtons">
@@ -70,6 +69,7 @@ function mapDispatchToProps(dispatch){
     handleDelete: function (e, student){
       e.preventDefault();
       dispatch(deleteStudent(student));
+      selectedStudentFromList([])
     },
     getStudents: function (){
       dispatch(fetchStudents());
