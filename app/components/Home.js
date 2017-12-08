@@ -15,7 +15,8 @@ const Home = () => {
           <div id='smoke'></div>
         </Draggable>
       </div>
-      <h1 id='welcometext'>Welcome</h1>
+      <h1 id='welcometext'>Welcome!</h1>
+      <h5 id="welcomesubtext">Drag the Planets to Begin</h5>
     </div>
   )
 };

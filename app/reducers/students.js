@@ -66,8 +66,6 @@ export function updateStudent(student){
 }
 
 export default function studentReducer (state = [], action) {
-  console.log('STATE COMING IN', state)
-  console.log('ACTION', action, studentStateMap, idx)
   switch(action.type) {
     case GOT_STUDENTS_FROM_SERVER:
       return action.students;

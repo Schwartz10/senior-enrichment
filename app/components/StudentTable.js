@@ -7,11 +7,9 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import { fetchStudents, selectedStudentFromList, deleteStudent } from '../reducers';
+import { selectedStudentFromList } from '../reducers';
 import { connect } from 'react-redux';
-import { Route, Switch, Link } from 'react-router-dom';
-const isEqual = require('lodash.isequal')
-
+import { withRouter } from 'react-router-dom';
 
 class StudentTable extends Component {
 
@@ -28,7 +26,6 @@ class StudentTable extends Component {
 
     if(this.props.students.length > 0){
       return (
-        <div id="student_table">
           <Table
             onRowSelection={(row) => {
             this.props.handleRowSelection.call(this, row, this.props.students[row])} }
@@ -54,9 +51,8 @@ class StudentTable extends Component {
               })}
             </TableBody>
           </Table>
-        </div>
       )
-    } else return <div></div>
+    } else return <div><h1>Loading</h1></div>
 
   }
 }
@@ -74,7 +70,7 @@ function mapDispatchToProps(dispatch){
       dispatch(selectedStudentFromList({}));
     },
     handleRowSelection: function (row, student){
-      row.length ? dispatch(selectedStudentFromList(student)) : dispatch(selectedStudentFromList([]))
+      row.length ? dispatch(selectedStudentFromList(student)) : dispatch(selectedStudentFromList({}))
       this.setState({selectedRow: row[0]})
     },
     updatePage: function (nextProps){
@@ -83,7 +79,7 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-const StudentTableContainer = connect(mapStateToProps, mapDispatchToProps)(StudentTable)
+const StudentTableContainer = connect(mapStateToProps, mapDispatchToProps)(StudentTable);
 
 export default StudentTableContainer;
 

@@ -27,7 +27,6 @@ export function deletedCampus(campus){
 }
 
 export function updatedCampus(campus){
-  console.log('UPDATING', campus)
   return {
     type: UPDATED_CAMPUS,
     campus

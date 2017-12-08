@@ -67,7 +67,9 @@ function mapDispatchToProps(dispatch){
     handleDelete: function (e, student){
       e.preventDefault();
       dispatch(deleteStudent(student));
-      selectedStudentFromList([]);
+    },
+    clearSelectedStudent(){
+      dispatch(selectedStudentFromList({}));
     },
     getStudents: function (){
       dispatch(fetchStudents());

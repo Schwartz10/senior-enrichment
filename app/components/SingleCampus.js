@@ -28,12 +28,7 @@ class SingleCampus extends Component {
     this.props.getStudents();
   }
 
-  componentWillUpdate(nextProps) {
-    console.log("===========> Will Update <===========", nextProps.students === this.props.students)
-  }
-
   render(){
-    console.log('-----------------------> SINGLE CMAPUS RERENDER')
     return(
       <div>
         <h1>{this.props.selectedCampus.name}</h1>

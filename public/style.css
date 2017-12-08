@@ -8,6 +8,7 @@
 
 .student_table {
   width: 90% !important;
+  margin: auto !important;
 }
 
 .raised_button {
@@ -77,14 +78,27 @@ body { background-color: white; }
 }
 
 #welcometext {
-  color:grey;
+  color:#03A9F4;
   text-align: center;
+  font-size: 7em;
+  margin: .1em;
+}
+
+#welcomesubtext {
+  text-align: center;
+  font-size: 4em;
+  color:#03A9F4;
+  margin: .1em
 }
 
 #planet_parent{
   display: flex;
 }
 
-#student_table{
-  justify-content: center
+.text-field {
+  margin: auto;
+}
+
+.table_row {
+  font-size: 60px !important
 }

@@ -64,6 +64,7 @@ class SingleStudent extends Component {
         /><br />
         <br />
         <SelectField
+        className="text-field"
           floatingLabelText="Campus"
           floatingLabelFixed={true}
           value={this.state.campus}
