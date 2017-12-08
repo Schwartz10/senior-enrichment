@@ -67,8 +67,6 @@ export function updateStudent(student){
 
 export default function studentReducer (state = [], action) {
   console.log('STATE COMING IN', state)
-  let studentStateMap = state.map(student => student.id);
-  let idx = studentStateMap.indexOf(action.id);
   console.log('ACTION', action, studentStateMap, idx)
   switch(action.type) {
     case GOT_STUDENTS_FROM_SERVER:
@@ -76,8 +74,12 @@ export default function studentReducer (state = [], action) {
     case GOT_STUDENT_FROM_SERVER:
       return [...state, action.student];
     case DELETED_STUDENT:
+      var studentStateMap = state.map(student => student.id);
+      var idx = studentStateMap.indexOf(action.student.id);
       return [...state.slice(0, idx), ...state.slice(idx + 1)];
     case UPDATED_STUDENT:
+      var studentStateMap = state.map(student => student.id);
+      var idx = studentStateMap.indexOf(action.student.id);
       return [...state.slice(0, idx), action.student, ...state.slice(idx + 1)];
     default: return state;
   }

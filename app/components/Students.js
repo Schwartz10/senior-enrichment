@@ -24,6 +24,7 @@ class Students extends Component {
   }
 
   render(){
+    console.log("-----------------------> Re")
     return (
       <div>
         <div className="listViewButtons">

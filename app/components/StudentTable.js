@@ -10,6 +10,7 @@ import {
 import { fetchStudents, selectedStudentFromList, deleteStudent } from '../reducers';
 import { connect } from 'react-redux';
 import { Route, Switch, Link } from 'react-router-dom';
+const isEqual = require('lodash.isequal')
 
 
 class StudentTable extends Component {
@@ -30,6 +31,12 @@ class StudentTable extends Component {
       this.props.updatePage.call(this, nextProps);
     }
   }
+
+  // shouldComponentUpdate(nextProps){
+  //   console.log('!!!!!!!!!!!!', isEqual(nextProps.filter, this.state.students))
+
+  //   return !isEqual(nextProps.filter, this.state.students)
+  // }
 
   render() {
     return (

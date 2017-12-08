@@ -70,14 +70,14 @@ export function updateCampus(campus){
 }
 
 export default function campusReducer (state = [], action){
-  let campusStateMap = state.map(campus => campus.id);
-  let idx = campusStateMap.indexOf(action.id);
   switch (action.type){
     case GOT_CAMPUSES_FROM_SERVER:
       return action.campuses;
     case GOT_CAMPUS_FROM_SERVER:
       return [...state, action.campus];
     case DELETED_CAMPUS:
+      var campusStateMap = state.map(campus => campus.id);
+      var idx = campusStateMap.indexOf(action.campus.id);
       return [...state.slice(0, idx), ...state.slice(idx + 1)];
     case UPDATED_CAMPUS:
       return [...state.slice(0, idx), action.campus, ...state.slice(idx + 1)];

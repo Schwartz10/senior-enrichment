@@ -20,3 +20,68 @@
   padding: .25em !important;
 }
 
+body { background-color: white; }
+#earth {
+ background-image: url('./fireball.png');
+  width: 200px;
+  height: 200px;
+  /* a black shadow from left and white from right */
+  box-shadow: inset 16px 0 40px 3px rgba(0,0,0,0.9),
+    inset -3px 0 5px 2px rgba(255,255,255,0.16);
+  background-size: 190px;
+  margin: 80px auto;
+  border-radius: 50%;
+  position: relative;
+  animation-name: move,scale,rotate;
+  animation-duration: 4s,4s,4s;
+  animation-iteration-count: infinite,infinite,infinite;
+  animation-timing-function: ease-in-out,linear,linear;
+}
+#ice {
+  background-image: url('./ice.png');
+   width: 200px;
+   height: 200px;
+   /* a black shadow from left and white from right */
+   box-shadow: inset 16px 0 40px 3px rgba(0,0,0,0.9),
+     inset -3px 0 5px 2px rgba(255,255,255,0.16);
+   background-size: 190px;
+   margin: 80px auto;
+   border-radius: 50%;
+   position: relative;
+   animation-name: move,scale,rotate;
+   animation-duration: 4s,4s,4s;
+   animation-iteration-count: infinite,infinite,infinite;
+   animation-timing-function: ease-in-out,linear,linear;
+ }
+
+ #smoke {
+  background-image: url('./smoke.png');
+   width: 200px;
+   height: 200px;
+   /* a black shadow from left and white from right */
+   box-shadow: inset 16px 0 40px 3px rgba(0,0,0,0.9),
+     inset -3px 0 5px 2px rgba(255,255,255,0.16);
+   background-size: 190px;
+   margin: 80px auto;
+   border-radius: 50%;
+   position: relative;
+   animation-name: move,scale,rotate;
+   animation-duration: 4s,4s,4s;
+   animation-iteration-count: infinite,infinite,infinite;
+   animation-timing-function: ease-in-out,linear,linear;
+ }
+
+
+@keyframes rotate {
+  0% { background-position: 0px; }
+  100% { background-position: 190px; }
+}
+
+#welcometext {
+  color:grey;
+  text-align: center;
+}
+
+#planet_parent{
+  display: flex;
+}
