@@ -19,9 +19,7 @@ class Students extends Component {
     super(props)
   }
 
-  componentDidMount(){
-    this.props.getStudents();
-  }
+  componentDidMount(){this.props.getStudents()}
 
   render(){
     return (
@@ -69,7 +67,7 @@ function mapDispatchToProps(dispatch){
     handleDelete: function (e, student){
       e.preventDefault();
       dispatch(deleteStudent(student));
-      selectedStudentFromList([])
+      selectedStudentFromList([]);
     },
     getStudents: function (){
       dispatch(fetchStudents());
@@ -77,6 +75,6 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-const StudentsContainer = connect(mapStateToProps, mapDispatchToProps)(Students)
+const StudentsContainer = connect(mapStateToProps, mapDispatchToProps)(Students);
 
 export default StudentsContainer;

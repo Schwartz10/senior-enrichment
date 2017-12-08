@@ -28,31 +28,33 @@ class StudentTable extends Component {
 
     if(this.props.students.length > 0){
       return (
-        <Table
-          onRowSelection={(row) => {
-          this.props.handleRowSelection.call(this, row, this.props.students[row])} }
-          className="student_table">
+        <div id="student_table">
+          <Table
+            onRowSelection={(row) => {
+            this.props.handleRowSelection.call(this, row, this.props.students[row])} }
+            className="student_table">
 
-          <TableHeader adjustForCheckbox={true} displaySelectAll={false}>
-            <TableRow >
-              <TableHeaderColumn>ID</TableHeaderColumn>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>Campus</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
+            <TableHeader adjustForCheckbox={true} displaySelectAll={false}>
+              <TableRow >
+                <TableHeaderColumn>ID</TableHeaderColumn>
+                <TableHeaderColumn>Name</TableHeaderColumn>
+                <TableHeaderColumn>Campus</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
 
-          <TableBody deselectOnClickaway={false} displayRowCheckbox={true}>
-            {this.props.students.map((student, idx) => {
-              return (
-                <TableRow key={student.id} selected={idx === this.state.selectedRow}>
-                  <TableRowColumn>{student.id}</TableRowColumn>
-                  <TableRowColumn>{student.name}</TableRowColumn>
-                  <TableRowColumn>{student.Campus ? student.Campus.name : 'NONE'}</TableRowColumn>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
+            <TableBody deselectOnClickaway={false} displayRowCheckbox={true}>
+              {this.props.students.map((student, idx) => {
+                return (
+                  <TableRow key={student.id} selected={idx === this.state.selectedRow}>
+                    <TableRowColumn>{student.id}</TableRowColumn>
+                    <TableRowColumn>{student.name}</TableRowColumn>
+                    <TableRowColumn>{student.Campus ? student.Campus.name : 'NONE'}</TableRowColumn>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </div>
       )
     } else return <div></div>
 

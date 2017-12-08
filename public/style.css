@@ -7,8 +7,7 @@
 }
 
 .student_table {
-  width: 75% !important;
-  align-self: center !important
+  width: 90% !important;
 }
 
 .raised_button {
@@ -84,4 +83,8 @@ body { background-color: white; }
 
 #planet_parent{
   display: flex;
+}
+
+#student_table{
+  justify-content: center
 }

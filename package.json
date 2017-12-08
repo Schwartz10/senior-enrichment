@@ -22,6 +22,7 @@
     "pg": "^6.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-draggable": "^3.0.4",
     "react-gif": "^0.1.0",
     "react-redux": "^4.4.5",
     "react-router": "^4.2.0",
