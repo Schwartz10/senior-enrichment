@@ -17,7 +17,7 @@ class AddStudent extends Component {
       gpa: '',
       campus: null
     }
-    this.handleTextChange = this.props.handleTextChange.bind(this)
+    this.handleTextChange = this.props.handleTextChange.bind(this);
   }
 
   componentDidMount(){
@@ -62,10 +62,8 @@ class AddStudent extends Component {
           onChange={this.props.handleSelectChange.bind(this)}
         >
           <MenuItem value={null} primaryText='SELECT ONE'/>
-          {this.props.campuses.map((campus)=> {
-            return (
-              <MenuItem key={campus.id} value={campus} primaryText={campus.name} />
-            )
+          {this.props.campuses.map(campus => {
+            return ( <MenuItem key={campus.id} value={campus} primaryText={campus.name} /> )
           })}
         </SelectField><br />
         <br />
@@ -116,13 +114,10 @@ function mapDispatchToProps(dispatch){
       this.setState(newStateObj);
     },
     handleSelectChange: function (event, index, value){
-      this.setState({campus: value})
+      this.setState({campus: value});
     },
     clearStateOnMount: function(){
-      this.setState({
-        name: '',
-        campus: null
-      })
+      this.setState({ name: '', campus: null })
     }
   }
 }

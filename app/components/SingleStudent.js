@@ -17,9 +17,9 @@ class SingleStudent extends Component {
       name: '',
       email: '',
       gpa: '',
-      campus: {}
+      campus: null
     }
-    this.handleTextChange = this.props.handleTextChange.bind(this)
+    this.handleTextChange = this.props.handleTextChange.bind(this);
   }
 
   componentDidMount(){
@@ -28,19 +28,21 @@ class SingleStudent extends Component {
   }
 
   componentWillUpdate(nextProps) {
+    console.log('SINGLE STUDENT', nextProps)
     if(nextProps.selectedStudent !== this.props.selectedStudent){
       this.setState({
         id: nextProps.selectedStudent.id,
         name: nextProps.selectedStudent.name,
         email: nextProps.selectedStudent.email,
         gpa: nextProps.selectedStudent.gpa,
-        campus: nextProps.selectedStudent.Campus,
+        campus: nextProps.selectedStudent.CampusId,
         dirty: false
       })
     }
   }
 
   render (){
+    console.log('STATE', this.state)
     return(
       <div>
         <h1> Update Student </h1><br />
@@ -64,16 +66,13 @@ class SingleStudent extends Component {
         /><br />
         <br />
         <SelectField
-          value={this.state.campus}
           floatingLabelText="Campus"
+          floatingLabelFixed={true}
+          value={this.state.campus}
           onChange={this.props.handleSelectChange.bind(this)}
         >
-          <MenuItem value={null} primaryText="Select One" />
-          {this.props.campuses.map((campus)=> {
-            console.log(campus)
-            return (
-              <MenuItem key={campus.id} value={campus} primaryText={campus.name} />
-            )
+          {this.props.campuses.map(campus => {
+            return (<MenuItem key={campus.id} value={campus.id} primaryText={campus.name} />)
           })}
         </SelectField><br />
         <br />
@@ -112,7 +111,7 @@ function mapDispatchToProps(dispatch){
       const [firstName, lastName] = this.state.name.split(' ')
       const gpa = Number(this.state.gpa)
       const email = this.state.email
-      const CampusId = this.state.campus.id
+      const CampusId = this.state.campus
       const id = this.state.id;
 
       const student = {firstName, lastName, gpa, email, CampusId, id}
